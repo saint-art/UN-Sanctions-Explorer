@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+
+sanctions.db
+
+output/
+
+developer_package/
+
+*.zip
+
+.DS_Store

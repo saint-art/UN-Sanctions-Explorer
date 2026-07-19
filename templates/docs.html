@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}
+API Documentation
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>API Documentation</h1>
+
+        <p class="subtitle">
+            REST endpoints for the UN Security Council Sanctions Explorer.
+        </p>
+
+    </div>
+
+    <a href="/" class="clear-btn">
+        ← Back to Search
+    </a>
+
+</div>
+
+<div class="docs-container">
+
+    <div class="endpoint-card">
+
+        <span class="method get">GET</span>
+
+        <div class="endpoint-header">
+
+            <h2>/health</h2>
+
+            <span class="status-badge success">
+                Live
+            </span>
+
+        </div>
+
+        <p>
+            Returns the current API health status.
+        </p>
+
+<pre>{
+    "status": "healthy",
+    "database": "connected"
+}</pre>
+
+        <div class="api-test">
+
+            <button
+                class="api-test-btn"
+                data-endpoint="/health">
+
+                Try Endpoint
+
+            </button>
+            
+            <button
+                class="copy-btn"
+                data-endpoint="/health">
+
+                Copy URL
+
+            </button>
+
+            <pre class="api-output"></pre>
+
+        </div>
+    </div>
+
+    <div class="endpoint-card">
+
+        <span class="method get">GET</span>
+
+        <div class="endpoint-header">
+
+            <h2>/api/dashboard</h2>
+
+            <span class="status-badge success">
+                Live
+            </span>
+
+        </div>
+
+        <p>
+            Returns overall database statistics.
+        </p>
+
+<pre>{
+    "persons": 1002,
+    "aliases": 1551,
+    "passports": 348,
+    "addresses": 551,
+    "amendments": 609
+}</pre>
+
+        <div class="api-test">
+
+            <button
+                class="api-test-btn"
+                data-endpoint="/api/dashboard">
+
+                Try Endpoint
+
+            </button>
+
+            <button
+                class="copy-btn"
+                data-endpoint="/api/dashboard">
+
+                Copy URL
+
+            </button>
+
+            <pre class="api-output"></pre>
+
+        </div>
+    </div>
+
+    <div class="endpoint-card">
+
+        <span class="method get">GET</span>
+
+        <div class="endpoint-header">
+
+            <h2>/person/&lt;sanction_id&gt;</h2>
+
+            <span class="status-badge success">
+                Dynamic
+            </span>
+
+        </div>
+
+        <p>
+            Opens the detailed profile page for a sanctioned individual.
+        </p>
+
+<pre>
+Example:
+/person/IRi.001
+</pre>
+
+    </div>
+
+    <div class="endpoint-card">
+
+        <span class="method get">GET</span>
+
+        <div class="endpoint-header">
+
+            <h2>/export/csv</h2>
+
+            <span class="status-badge download">
+                Download
+            </span>
+
+        </div>
+
+        <p>
+            Downloads search results as a CSV file.
+        </p>
+
+<pre>
+/export/csv?search=sudan
+</pre>
+
+    </div>
+
+    <div class="endpoint-card">
+
+        <span class="method get">GET</span>
+
+        <div class="endpoint-header">
+
+            <h2>/export/excel</h2>
+
+            <span class="status-badge download">
+                Download
+            </span>
+
+        </div>
+
+        <p>
+            Downloads search results as an Excel spreadsheet.
+        </p>
+
+<pre>
+/export/excel?search=sudan
+</pre>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='docs.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}
+System Health
+{% endblock %}
+
+{% block content %}
+
+<h1>System Health Dashboard</h1>
+
+<p class="subtitle">
+Live application status.
+</p>
+
+<div class="dashboard-grid">
+
+    <div class="card">
+
+        <div class="card-title">
+            API Status
+        </div>
+
+        <div
+            id="api-status"
+            class="status-good">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">
+            Database
+        </div>
+
+        <div
+            id="db-status"
+            class="status-good">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">
+            Search Service
+        </div>
+
+        <div class="status-good">
+            🟢 Operational
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-title">
+            Dashboard
+        </div>
+
+        <div class="status-good">
+            🟢 Operational
+        </div>
+
+    </div>
+
+</div>
+
+
+<h2 style="margin-top:50px">
+Database Statistics
+</h2>
+
+<div class="dashboard-grid">
+
+    <div class="card">
+
+        <div class="card-title">
+            Persons
+        </div>
+
+        <div
+            class="card-value"
+            id="persons-count">
+
+            {{ stats.persons }}
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Aliases
+        </div>
+
+        <div
+            class="card-value"
+            id="aliases-count">
+
+            {{ stats.aliases }}
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Passports
+        </div>
+
+        <div
+            class="card-value"
+            id="passports-count">
+
+            {{ stats.passports }}
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Addresses
+        </div>
+
+        <div
+            class="card-value"
+            id="addresses-count">
+
+            {{ stats.addresses }}
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-title">
+            Amendments
+        </div>
+
+        <div
+            class="card-value"
+            id="amendments-count">
+
+            {{ stats.amendments }}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card" style="margin-top:40px">
+
+    <div class="card-title">
+        Last Health Check
+    </div>
+
+    <div
+        id="last-update"
+        class="card-value">
+
+        Loading...
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='health.js') }}"></script>
+
+{% endblock %}

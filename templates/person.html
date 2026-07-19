@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ person.full_name }} | UN Sanctions Explorer
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>{{ person.full_name }}</h1>
+
+        <p class="subtitle">
+
+            Sanction ID:
+            <strong>{{ person.sanction_id }}</strong>
+
+        </p>
+
+    </div>
+
+    <a href="/" class="clear-btn">
+
+        ← Back to Search
+
+    </a>
+
+</div>
+
+<div class="profile-grid">
+
+    <div class="info-card">
+
+        <h3>Nationality</h3>
+
+        <p>{{ person.nationality or "Not Available" }}</p>
+
+    </div>
+
+    <div class="info-card">
+
+        <h3>Date of Birth</h3>
+
+        <p>{{ person.dob or "Unknown" }}</p>
+
+    </div>
+
+    <div class="info-card">
+
+        <h3>Aliases</h3>
+
+        <p>{{ aliases|length }}</p>
+
+    </div>
+
+    <div class="info-card">
+
+        <h3>Passports</h3>
+
+        <p>{{ passports|length }}</p>
+
+    </div>
+
+    <div class="info-card">
+
+        <h3>Addresses</h3>
+
+        <p>{{ addresses|length }}</p>
+
+    </div>
+
+    <div class="info-card">
+
+        <h3>Amendments</h3>
+
+        <p>{{ amendments|length }}</p>
+
+    </div>
+
+</div>
+
+<div class="section-card">
+
+    <h2>Basic Information</h2>
+
+    <table>
+
+        <tr>
+            <th>Full Name</th>
+            <td>{{ person.full_name }}</td>
+        </tr>
+
+        <tr>
+            <th>Sanction ID</th>
+            <td>{{ person.sanction_id }}</td>
+        </tr>
+
+        <tr>
+            <th>Nationality</th>
+            <td>{{ person.nationality or "Not Available" }}</td>
+        </tr>
+
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{ person.dob or "Unknown" }}</td>
+        </tr>
+
+        <tr>
+            <th>Place of Birth</th>
+            <td>{{ person.pob or "Unknown" }}</td>
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="section-card">
+
+    <h2>Known Aliases</h2>
+
+    {% if aliases %}
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Alias</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for alias in aliases %}
+
+            <tr>
+
+                <td>{{ alias.alias_name }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <p>No aliases available.</p>
+
+    {% endif %}
+
+</div>
+
+<div class="section-card">
+
+    <h2>Passports</h2>
+
+    {% if passports %}
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Passport Number</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for passport in passports %}
+
+            <tr>
+
+                <td>{{ passport.passport_number }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <p>No passport information available.</p>
+
+    {% endif %}
+
+</div>
+
+<div class="section-card">
+
+    <h2>Addresses</h2>
+
+    {% if addresses %}
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Address</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for address in addresses %}
+
+            <tr>
+
+                <td>{{ address.address }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <p>No addresses available.</p>
+
+    {% endif %}
+
+</div>
+
+<div class="section-card">
+
+    <h2>Amendment History</h2>
+
+    {% if amendments %}
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Date</th>
+
+                <th>Description</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for amendment in amendments %}
+
+            <tr>
+
+                <td>{{ amendment.amendment_date }}</td>
+
+                <td>{{ amendment.description }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <p>No amendment history available.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

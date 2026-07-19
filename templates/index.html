@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+{% block title %}
+UN Sanctions Search
+{% endblock %}
+
+{% block content %}
+
+<h1>UN Security Council Sanctions Explorer</h1>
+
+<p class="subtitle">
+Search sanctioned individuals by Name, Nationality or Sanction ID.
+</p>
+
+<div class="search-card">
+
+    <h2>Search Database</h2>
+
+    <p>
+        Search across all UN Security Council sanctions records.
+    </p>
+
+    <form class="search-form" method="GET">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search..."
+            value="{{ search }}">
+
+        <select name="field">
+
+            <option value="all" {% if field=="all" %}selected{% endif %}>
+                All Fields
+            </option>
+
+            <option value="name" {% if field=="name" %}selected{% endif %}>
+                Name
+            </option>
+
+            <option value="nationality" {% if field=="nationality" %}selected{% endif %}>
+                Nationality
+            </option>
+
+            <option value="id" {% if field=="id" %}selected{% endif %}>
+                Sanction ID
+            </option>
+
+        </select>
+
+        <select name="sort">
+
+            <option value="name" {% if sort=="name" %}selected{% endif %}>
+                Name A-Z
+            </option>
+
+            <option value="nationality" {% if sort=="nationality" %}selected{% endif %}>
+                Nationality
+            </option>
+
+            <option value="dob" {% if sort=="dob" %}selected{% endif %}>
+                Date of Birth
+            </option>
+
+        </select>
+
+        <select name="per_page">
+
+            <option value="10" {% if per_page==10 %}selected{% endif %}>10</option>
+
+            <option value="25" {% if per_page==25 %}selected{% endif %}>25</option>
+
+            <option value="50" {% if per_page==50 %}selected{% endif %}>50</option>
+
+            <option value="100" {% if per_page==100 %}selected{% endif %}>100</option>
+
+        </select>
+
+        <button type="submit" id="searchButton">
+
+            <span id="searchText">
+                🔍 Search
+            </span>
+
+        </button>
+
+        <a href="/" class="clear-btn">
+            Reset
+        </a>
+
+    </form>
+
+</div>
+
+{% if not search %}
+
+<div class="welcome-box">
+
+    <h2>Welcome</h2>
+
+    <p>Search using:</p>
+
+    <ul>
+        <li>Person Name</li>
+        <li>Nationality</li>
+        <li>Sanction ID</li>
+    </ul>
+
+    <p><strong>Examples</strong></p>
+
+    <code>Abbas</code><br>
+    <code>Sudan</code><br>
+    <code>IRi.001</code>
+
+</div>
+
+{% endif %}
+
+{% if search %}
+
+<div class="search-summary">
+
+    <h3>Search Results</h3>
+
+    <p>
+
+        Showing
+
+        <strong>{{ ((page-1)*per_page)+1 }}</strong>
+
+        -
+
+        <strong>{{ ((page-1)*per_page)+results|length }}</strong>
+
+        of
+
+        <strong>{{ total }}</strong>
+
+        results
+
+    </p>
+
+    <p>
+
+        Search:
+
+        <strong>{{ search }}</strong>
+
+        |
+
+        Filter:
+
+        <strong>{{ field|title }}</strong>
+
+        |
+
+        Sort:
+
+        <strong>{{ sort|title }}</strong>
+
+    </p>
+
+    <p>
+
+        Database contains
+
+        <strong>{{ stats.persons }}</strong>
+
+        sanctioned records.
+
+    </p>
+
+</div>
+
+{% endif %}
+
+{% if results %}
+
+<div class="results-toolbar">
+
+    <a
+        class="view-btn"
+        href="/export/csv?search={{ search }}&field={{ field }}&sort={{ sort }}">
+        📄 Export CSV
+    </a>
+
+    <a
+    class="view-btn"
+    href="/export/excel?search={{ search }}&field={{ field }}&sort={{ sort }}">
+    📊 Export Excel
+    </a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+
+<a href="/?search={{ search }}&field={{ field }}&sort=id&per_page={{ per_page }}">
+
+Sanction ID
+
+</a>
+
+</th>
+
+<th>
+
+<a href="/?search={{ search }}&field={{ field }}&sort=name&per_page={{ per_page }}">
+
+Full Name
+
+{% if sort=="name" %}
+
+▲
+
+{% endif %}
+
+</a>
+
+</th>
+
+<th>
+
+<a href="/?search={{ search }}&field={{ field }}&sort=nationality&per_page={{ per_page }}">
+
+Nationality
+
+{% if sort=="nationality" %}
+
+▲
+
+{% endif %}
+
+</a>
+
+</th>
+
+<th>
+
+<a href="/?search={{ search }}&field={{ field }}&sort=dob&per_page={{ per_page }}">
+
+Date of Birth
+
+{% if sort=="dob" %}
+
+▲
+
+{% endif %}
+
+</a>
+
+</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in results %}
+
+<tr>
+
+    <td>
+        {{ row[0] }}
+    </td>
+
+    <td>
+        {{ (row[1] or "N/A")|highlight(search)|safe }}
+    </td>
+
+    <td>
+        {{ (row[2] or "Not Available")|highlight(search)|safe }}
+    </td>
+
+    <td>
+        {{ (row[3] or "Not Available")|highlight(search)|safe }}
+    </td>
+
+    <td>
+
+        <a
+            class="view-btn"
+            href="/person/{{ row[0] }}">
+
+            View Profile
+
+        </a>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% if pages > 1 %}
+
+<div class="pagination">
+
+{% if page > 1 %}
+
+<a href="/?search={{ search }}&field={{ field }}&sort={{ sort }}&per_page={{ per_page }}&page={{ page-1 }}">
+
+← Previous
+
+</a>
+
+{% endif %}
+
+<span>
+
+Page
+
+<strong>{{ page }}</strong>
+
+of
+
+<strong>{{ pages }}</strong>
+
+</span>
+
+{% if page < pages %}
+
+<a href="/?search={{ search }}&field={{ field }}&sort={{ sort }}&per_page={{ per_page }}&page={{ page+1 }}">
+
+Next →
+
+</a>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+{% elif search %}
+
+<div class="empty-state">
+
+<h2>No Results Found</h2>
+
+<p>
+
+We couldn't find any sanctions matching
+
+<strong>"{{ search }}"</strong>.
+
+</p>
+
+<p>Try searching by:</p>
+
+<ul>
+
+<li>Full Name</li>
+
+<li>Nationality</li>
+
+<li>Sanction ID</li>
+
+</ul>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
