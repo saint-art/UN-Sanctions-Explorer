@@ -1,111 +1,94 @@
-# UN Security Council Sanctions Data Pipeline
+# UN Security Council Sanctions Explorer
 
-## Project Overview
-
-This project extracts, cleans, stores, and exposes data from the United Nations Security Council Consolidated Sanctions List.
-
-The application demonstrates a complete data engineering pipeline, beginning with web scraping and ending with a searchable web application and REST API.
+A modern Flask web application for searching and exploring the United 
+Nations Security Council Consolidated Sanctions List.
 
 ---
 
 ## Features
 
-- Scrapes the official UN Security Council sanctions HTML dataset
-- Cleans and normalizes extracted data
-- Generates structured CSV datasets
-- Imports data into a relational SQLite database
-- Provides command-line search
-- Provides a Flask web interface
-- Provides REST API endpoints
-- Displays dashboard statistics
-- Displays complete sanction profiles including:
-  - General information
-  - Aliases
-  - Passports
-  - Addresses
-  - Amendment history
+- Fast full-text search
+- Search by:
+  - Full Name
+  - Nationality
+  - Sanction ID
+- Individual profile pages
+- Dashboard with database statistics
+- API Documentation page
+- Health monitoring page
+- CSV Export
+- Excel Export
+- Responsive modern UI
+- SQLite backend
+- REST API
 
 ---
 
-## Technologies Used
+## Screenshots
 
-- Python 3
-- BeautifulSoup4
-- Pandas
-- SQLite
+Add screenshots here after deployment.
+
+---
+
+## Technology Stack
+
+- Python
 - Flask
-- HTML
-- CSS
-
----
-
-## Database Schema
-
-The project stores data in five relational tables.
-
-- persons
-- aliases
-- passports
-- addresses
-- amendments
+- SQLite
+- HTML5
+- CSS3
+- JavaScript
 
 ---
 
 ## Project Structure
 
 ```
-UN_SANCTIONS/
+UN-Sanctions-Explorer/
 
 app.py
 api.py
 database.py
-sanctions_phase2.py
-load_to_sqlite.py
-search_sanctions.py
-
 sanctions.db
-schema.sql
 
 templates/
 static/
-output/
 
-README.md
+exports/
+
 requirements.txt
-.gitignore
+README.md
 ```
 
 ---
 
 ## Installation
 
-Clone the repository.
+Clone the repository
 
-Install dependencies.
+```bash
+git clone https://github.com/YOUR_USERNAME/UN-Sanctions-Explorer.git
+```
+
+Move into the project
+
+```bash
+cd UN-Sanctions-Explorer
+```
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Generate the CSV datasets.
-
-```bash
-python3 sanctions_phase2.py
-```
-
-Load the database.
-
-```bash
-python3 load_to_sqlite.py
-```
-
-Run the web application.
+Run the application
 
 ```bash
 python3 app.py
 ```
 
-Open your browser.
+Open
 
 ```
 http://127.0.0.1:5000
@@ -113,48 +96,54 @@ http://127.0.0.1:5000
 
 ---
 
+## Available Pages
+
+| Route | Description |
+|--------|-------------|
+| / | Search Page |
+| /dashboard | Dashboard |
+| /docs | API Documentation |
+| /health-ui | Health Monitor |
+| /person/<id> | Person Profile |
+
+---
+
 ## API Endpoints
 
-### Search
-
-```
-GET /api/search?name=abbas
-```
-
-### Dashboard
-
-```
-GET /dashboard
-```
-
-### Health Check
+### Health
 
 ```
 GET /health
 ```
 
-### Statistics
+### Dashboard
 
 ```
-GET /stats
+GET /api/dashboard
 ```
 
 ---
 
-## Data Source
+## Database
 
-United Nations Security Council Consolidated Sanctions List
+SQLite relational database containing
+
+- Persons
+- Aliases
+- Passports
+- Addresses
+- Amendments
 
 ---
 
 ## Future Improvements
 
-- MySQL database support
-- SQLAlchemy ORM
-- Authentication
-- Pagination
-- Advanced filtering
 - Docker support
+- Authentication
+- PostgreSQL support
+- Dark mode
+- Docker Compose
+- CI/CD
 - Cloud deployment
 
 ---
@@ -162,3 +151,7 @@ United Nations Security Council Consolidated Sanctions List
 ## Author
 
 Nelvin Mwendwa
+
+Python Backend Developer
+
+Data Engineer
